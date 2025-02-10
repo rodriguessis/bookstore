@@ -30,7 +30,7 @@ public class BookController {
     @PostMapping
     public ResponseEntity registerBook(@RequestBody @Valid RequestBook book ) {
 
-        var newBook = new Book( book.name() );
+        var newBook = new Book( book );
         var salvedBook = this.repository.save(newBook);
 
         return ResponseEntity.ok(salvedBook);
@@ -38,14 +38,14 @@ public class BookController {
 
     @PutMapping("{id}")
     @Transactional
-    public  ResponseEntity updateBook( @PathVariable("id") String id,
+    public  ResponseEntity updateBook( @PathVariable("id") Integer id,
                                        @RequestBody @Valid RequestBook book ) {
 
         Optional<Book> optionalBook = this.repository.findById(id);
 
         if ( optionalBook.isPresent() ) {
             Book upBook = optionalBook.get();
-            upBook.setName(book.name());
+            upBook.setAll(book);
             return ResponseEntity.ok(upBook);
         }
         else {
@@ -54,7 +54,7 @@ public class BookController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteBook(@PathVariable("id") String id) {
+    public ResponseEntity deleteBook(@PathVariable("id") Integer id) {
         this.repository.deleteById(id);
         return ResponseEntity.noContent().build() ;
     }
