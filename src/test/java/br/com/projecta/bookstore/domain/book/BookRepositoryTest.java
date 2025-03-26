@@ -27,11 +27,11 @@ class BookRepositoryTest {
     void findBookByNameSucess() {
 
         String nameOfBook = "The Name Of Book";
-        RequestBook requestBook = new RequestBook( nameOfBook );
+        RequestBook requestBook = new RequestBook( nameOfBook, "este é um livro muito bom", "123445667" );
 
         Book bookCreated = createOneBook( requestBook );
 
-        Optional<Book> foundeBook = this.bookRepository.findByName( nameOfBook );
+        Optional<Book> foundeBook = this.bookRepository.findByTitle( nameOfBook );
 
         assertThat(foundeBook.isPresent()).isTrue();
 
@@ -43,7 +43,7 @@ class BookRepositoryTest {
 
         String nameOfBook = "The Name Of Book";
 
-        Optional<Book> foundeBook = this.bookRepository.findByName( nameOfBook );
+        Optional<Book> foundeBook = this.bookRepository.findByTitle( nameOfBook );
 
         assertThat(foundeBook.isEmpty() ).isTrue();
 
@@ -52,7 +52,7 @@ class BookRepositoryTest {
 
     private Book createOneBook( RequestBook requestBook  ) {
 
-        Book newBook = new Book( requestBook.name() );
+        Book newBook = new Book( requestBook );
         this.entityManager.persist(newBook);
         return newBook;
 

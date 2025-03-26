@@ -31,9 +31,11 @@ public class LoanController {
     @GetMapping
     public ResponseEntity listAll() {
 
-        var allLoan = this.repository.findAll();
+        //var allLoan = this.repository.findAll();
 
-        return ResponseEntity.ok(allLoan);
+        var loansOpens = this.repository.loansOpens();
+
+        return ResponseEntity.ok(loansOpens);
     }
 
 }
